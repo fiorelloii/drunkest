@@ -3,168 +3,828 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>88ers</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Drunkest League</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue: rgb(0, 61, 167);
+            --red: rgb(222, 0, 49);
+            --white: rgb(255, 255, 255);
+            --dark: #1a1a1a;
+            --gray: #f5f5f5;
+            --black: #000000;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: var(--white);
+        }
+
+        /* Main Navigation */
+        .main-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 2000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .main-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        .main-nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .main-nav-links a {
+            text-decoration: none;
+            color: var(--blue);
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .main-nav-links a:hover,
+        .main-nav-links a.active {
+            background: var(--blue);
+            color: var(--white);
+        }
+
+        /* Main Sections */
+        .main-section {
+            min-height: 100vh;
+            padding-top: 100px;
+            display: none;
+        }
+
+        .main-section.active {
+            display: block;
+        }
+
+        .main-section h1 {
+            text-align: center;
+            font-size: 3rem;
+            color: var(--blue);
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        /* Regolamento Section Styles */
+        .regolamento-section {
+            scroll-snap-type: y mandatory;
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+
+        .rule-section {
+            min-height: calc(100vh - 100px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            scroll-snap-align: start;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .rule-section:nth-child(odd) {
+            background: var(--white);
+            color: var(--dark);
+        }
+
+        .rule-section:nth-child(even) {
+            background: var(--gray);
+            color: var(--dark);
+        }
+
+        /* Sub Navigation for Regolamento */
+        .sub-navbar {
+            position: sticky;
+            top: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1500;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sub-nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .sub-nav-links a {
+            text-decoration: none;
+            color: var(--blue);
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .sub-nav-links a:hover,
+        .sub-nav-links a.active {
+            background: var(--blue);
+            color: var(--white);
+        }
+
+        .section-content {
+            max-width: 900px;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .section-content.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rule-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .rule-number {
+            display: inline-flex;
+            background: var(--blue);
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+
+        .rule-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--blue);
+        }
+
+        .rule-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .rule-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--dark);
+        }
+
+        .rule-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .rule-content ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .rule-content li {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+
+        .rule-content li::marker {
+            color: var(--blue);
+            font-weight: 600;
+        }
+
+        .prize-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .prize-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .prize-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .prize-position {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .prize-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--red);
+        }
+
+        .conference-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin: 2rem 0;
+        }
+
+        .conference {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .conference-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--blue);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            padding: 1rem;
+            background: var(--gray);
+            border-radius: 10px;
+        }
+
+        .conference ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .conference li {
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.5rem;
+            background: rgba(0, 61, 167, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--blue);
+            transition: all 0.3s ease;
+        }
+
+        .conference li:hover {
+            background: rgba(0, 61, 167, 0.1);
+            transform: translateX(5px);
+        }
+
+        .market-schedule {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .market-day {
+            background: var(--blue);
+            color: var(--white);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .highlight-box {
+            background: rgba(222, 0, 49, 0.1);
+            border-left: 4px solid var(--red);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .highlight-box strong {
+            color: var(--red);
+        }
+
+        .calendar-table {
+            width: 100%;
+            margin: 2rem 0;
+            border-collapse: collapse;
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar-table th,
+        .calendar-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .calendar-table th {
+            background: var(--blue);
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .calendar-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Empty sections placeholder */
+        .empty-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 200px);
+            text-align: center;
+            color: #666;
+        }
+
+        .empty-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--blue);
+        }
+
+        .empty-content p {
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        .main-footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 3rem 2rem 2rem;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-nav-links {
+                display: none;
+            }
+
+            .main-logo {
+                font-size: 1.5rem;
+            }
+
+            .rule-section {
+                padding: 1rem;
+            }
+
+            .prize-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .conference-section {
+                grid-template-columns: 1fr;
+            }
+
+            .market-schedule {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .sub-nav-content {
+                gap: 0.5rem;
+            }
+
+            .sub-nav-links a {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-content">
-            <div class="logo">
-                <img src="./assets/logo.png" alt="Logo" />
-            </div>
-            <ul class="nav-links">
-                <li><a href="#section1">Regolamento</a></li>
-                <li><a href="#section2">Draft</a></li>
-                <li><a href="#section3">March Drunkeness</a></li>
-                <li><a href="#section3">Hall Ho Fame</a></li>
+    <!-- Main Navigation -->
+    <nav class="main-navbar">
+        <div class="main-nav-content">
+            <a href="#" class="main-logo">Drunkest</a>
+            <ul class="main-nav-links">
+                <li><a href="#" onclick="showSection('regolamento')" class="active">Regolamento</a></li>
+                <li><a href="#" onclick="showSection('draft')">Draft</a></li>
+                <li><a href="#" onclick="showSection('march-drunkeness')">March Drunkeness</a></li>
+                <li><a href="#" onclick="showSection('hall-of-fame')">Hall of Fame</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Section 1 - Hero -->
-    <section id="section1" class="section-1">
-        <div class="section-content">
-            <h1>88ers</h1>
-            <p class="hero-subtitle">Fondata nel 2020 da un'intuizione dei soci onorari Domenico Fiorilli e Pietro Noschese, la franchigia degli 88ers è nata con un solo, inequivocabile obiettivo: dominare la lega Drunkest e stabilire, una volta per tutte, chi merita il titolo di più forte in campo.</p>
-<!--             <p class="hero-description">Il nostro viaggio è iniziato nei distretti più autentici e battaglieri di Philadelphia, dove il cemento e l'asfalto sono stati i nostri primi campi da gioco. In un mondo in cui le grandi franchigie si contendono il potere a suon di milioni, noi abbiamo costruito la nostra identità mattoncino dopo mattoncino, partendo da zero. Oggi, il nostro sogno più grande è sollevare il trofeo, dimostrando che il talento e la determinazione possono battere qualsiasi ostacolo.</p>
-        </div> -->
-        <div class="scroll-indicator"></div>
-        
-        <!-- Floating decorative elements -->
-        <div class="floating-element" style="top: 20%; left: 10%; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
-        <div class="floating-element" style="top: 60%; right: 15%; width: 80px; height: 80px; background: rgba(255,255,255,0.08); border-radius: 50%;"></div>
-        <div class="floating-element" style="bottom: 30%; left: 20%; width: 60px; height: 60px; background: rgba(255,255,255,0.06); border-radius: 50%;"></div>
-    </section>
+    <!-- Regolamento Section -->
+    <section id="regolamento" class="main-section active">
+        <!-- Sub Navigation for Regolamento -->
+        <div class="sub-navbar">
+            <div class="sub-nav-content">
+                <div class="sub-nav-links">
+                    <a href="#rule1" class="active">Iscrizione</a>
+                    <a href="#rule2">Calendario</a>
+                    <a href="#rule3">Draft</a>
+                    <a href="#rule4">Mercato</a>
+                    <a href="#rule5">Coppa</a>
+                </div>
+            </div>
+        </div>
 
-    <!-- Section 2 -->
-    <section id="section2" class="section-2">
-        <div class="section-content">
-            <h2></h2>
-            <p style="margin-bottom: 2rem;"></p>
-            
-            <div class="media-carousel">
-                <div class="carousel-container" id="carouselContainer">
-                    <div class="carousel-slide">
-<!--                         <div class="carousel-placeholder">Doncic</div> -->
-                        <img src="./assets/doncic.webp" alt="Media 1" />
+        <div class="regolamento-section">
+            <!-- Rule 1: Iscrizione e Premi -->
+            <div id="rule1" class="rule-section">
+                <div class="section-content">
+                    <div class="rule-header">
+                        <div class="rule-number">1</div>
+                        <h1 class="rule-title">Iscrizione e Premi</h1>
+                        <p class="rule-subtitle">Quota di partecipazione e distribuzione premi</p>
                     </div>
-                    <div class="carousel-slide">
-<!--                         <div class="carousel-placeholder">Immagine 2</div> -->
-                        <img src="./assets/mitchell.avif" alt="Media 2" />
-                    </div>
-                    <div class="carousel-slide">
-<!--                         <div class="carousel-placeholder">Immagine 3</div> -->
-                        <img src="./assets/siakam.webp" alt="Media 3" />
-                    </div>
-                    <div class="carousel-slide">
-<!--                         <div class="carousel-placeholder">Immagine 4</div> -->
-                        <img src="./assets/sengun.webp" alt="Media 4" />
+                    
+                    <div class="rule-content">
+                        <p><strong>L'iscrizione a Drunkest League prevede una quota di 60€.</strong></p>
+                        
+                        <div class="prize-grid">
+                            <div class="prize-card">
+                                <div class="prize-position">1° posto</div>
+                                <div class="prize-amount">280€</div>
+                            </div>
+                            <div class="prize-card">
+                                <div class="prize-position">2° posto</div>
+                                <div class="prize-amount">160€</div>
+                            </div>
+                            <div class="prize-card">
+                                <div class="prize-position">3° posto</div>
+                                <div class="prize-amount">60€</div>
+                            </div>
+                            <div class="prize-card">
+                                <div class="prize-position">Coppa</div>
+                                <div class="prize-amount">100€</div>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <strong>Requisiti squadra:</strong> Il nome della squadra dovrà essere così composto (come in NBA): "nome città/frazione/quartiere" + "nome squadra" e dovrà essere presentato uno stemma.
+                        </div>
                     </div>
                 </div>
-                
-                <div class="carousel-nav">
-                    <button class="carousel-btn" onclick="previousSlide()">‹</button>
-                    <button class="carousel-btn" onclick="nextSlide()">›</button>
+            </div>
+
+            <!-- Rule 2: Calendario -->
+            <div id="rule2" class="rule-section">
+                <div class="section-content">
+                    <div class="rule-header">
+                        <div class="rule-number">2</div>
+                        <h1 class="rule-title">Calendario</h1>
+                        <p class="rule-subtitle">Struttura del campionato e della coppa</p>
+                    </div>
+                    
+                    <div class="rule-content">
+                        <p>Il calendario Dunkest è formato da <strong>64 giornate</strong>. Siccome siamo 10, giocheremo un numero di giornate multiplo di 9 e tagliamo le ultime giornate (nelle quali i giocatori spesso riposano in vista dei Playoff).</p>
+                        
+                        <div class="highlight-box">
+                            <strong>Il campionato finirà alla 54esima giornata.</strong>
+                        </div>
+                        
+                        <p>La coppa si terrà nelle 12 giornate successive alla pausa per l'All-Star Game, parallelamente al campionato.</p>
+                        
+                        <table class="calendar-table">
+                            <thead>
+                                <tr>
+                                    <th>Periodo</th>
+                                    <th>Giornate</th>
+                                    <th>Descrizione</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Stagione Regolare</td>
+                                    <td>G1 - G43</td>
+                                    <td>Campionato principale</td>
+                                </tr>
+                                <tr>
+                                    <td>All-Star Break</td>
+                                    <td>G43</td>
+                                    <td>Pausa e definizione Conference</td>
+                                </tr>
+                                <tr>
+                                    <td>Coppa + Campionato</td>
+                                    <td>G44 - G54</td>
+                                    <td>Fasi finali parallele</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                
-                <div class="carousel-dots">
-                    <span class="dot active" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
-                    <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
+
+            <!-- Rule 3: Draft -->
+            <div id="rule3" class="rule-section">
+                <div class="section-content">
+                    <div class="rule-header">
+                        <div class="rule-number">3</div>
+                        <h1 class="rule-title">Draft</h1>
+                        <p class="rule-subtitle">Sistema di selezione giocatori</p>
+                    </div>
+                    
+                    <div class="rule-content">
+                        <p>I giocatori verranno scelti con il metodo <strong>"Draft a serpentina"</strong>. Si decide un'ordine di chiamata che poi si inverte a ogni round.</p>
+                        
+                        <div class="highlight-box">
+                            <strong>Esempio:</strong> il primo avrà le scelte 1, 20, 21, 40, 41, ecc.
+                        </div>
+                        
+                        <p>Ognuno al suo turno può chiamare qualsiasi giocatore di qualsiasi ruolo, a patto che alla fine del Draft il proprio roster sia composto da:</p>
+                        
+                        <div class="prize-grid">
+                            <div class="prize-card">
+                                <div class="prize-position">Guardie</div>
+                                <div class="prize-amount">5</div>
+                            </div>
+                            <div class="prize-card">
+                                <div class="prize-position">Ali</div>
+                                <div class="prize-amount">5</div>
+                            </div>
+                            <div class="prize-card">
+                                <div class="prize-position">Centri</div>
+                                <div class="prize-amount">3</div>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <strong>Lottery:</strong> Una settimana prima del Draft verrà effettuata la Lottery, il sorteggio per decidere l'ordine di chiamata.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rule 4: Mercato -->
+            <div id="rule4" class="rule-section">
+                <div class="section-content">
+                    <div class="rule-header">
+                        <div class="rule-number">4</div>
+                        <h1 class="rule-title">Mercato</h1>
+                        <p class="rule-subtitle">Scambi e Free Agent</p>
+                    </div>
+                    
+                    <div class="rule-content">
+                        <p>Per effettuare scambi e per il mercato Free Agent verrà utilizzato il sistema di Dunkest.</p>
+                        
+                        <p><strong>Il mercato si apre ogni 5 giornate:</strong></p>
+                        
+                        <div class="market-schedule">
+                            <div class="market-day">G5</div>
+                            <div class="market-day">G10</div>
+                            <div class="market-day">G15</div>
+                            <div class="market-day">G20</div>
+                            <div class="market-day">G25</div>
+                            <div class="market-day">G30</div>
+                            <div class="market-day">G35</div>
+                            <div class="market-day">G40</div>
+                            <div class="market-day">G45</div>
+                            <div class="market-day">G50</div>
+                        </div>
+                        
+                        <p><small>(Per G5 si intende prima dell'inizio della quinta giornata)</small></p>
+                        
+                        <div class="highlight-box">
+                            <strong>Regola comunicazione:</strong> Ogni offerta deve essere comunicata nel gruppo WhatsApp "Trades" per dare la possibilità a tutti di poter cambiare. Ogni offerta non comunicata sarà annullata dal Commissioner.
+                            <br><br>
+                            <strong>Eccezione:</strong> Il primo in classifica è esonerato dall'obbligo perché non ha nessuno da avvertire.
+                        </div>
+                        
+                        <p>Ognuno potrà fare offerte autonomamente e tagliare qualsiasi giocatore. In caso di più offerte allo stesso giocatore, questo va alla squadra posizionata peggio in classifica.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rule 5: Coppa -->
+            <div id="rule5" class="rule-section">
+                <div class="section-content">
+                    <div class="rule-header">
+                        <div class="rule-number">5</div>
+                        <h1 class="rule-title">Coppa</h1>
+                        <p class="rule-subtitle">Formula playoff e Conference</p>
+                    </div>
+                    
+                    <div class="rule-content">
+                        <p>La coppa avrà luogo dalla 44esima giornata e avverrà parallelamente al campionato. Formula con divisione virtuale in due Conference:</p>
+                        
+                        <div class="conference-section">
+                            <div class="conference">
+                                <h3 class="conference-title">🍺 Beer Conference</h3>
+                                <ul>
+                                    <li>Cava Bulla</li>
+                                    <li>Los Angeles Fakers</li>
+                                    <li>Salerno Cavaliers</li>
+                                    <li>Torino Bulls</li>
+                                    <li>Torrione Horses</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="conference">
+                                <h3 class="conference-title">🍷 Wine Conference</h3>
+                                <ul>
+                                    <li>Pontecagnano 88ers</li>
+                                    <li>San Tino Spurs</li>
+                                    <li>Sannio Pioneers</li>
+                                    <li>Torino Raptors</li>
+                                    <li>Torrione Pantofolai</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <strong>Play-in:</strong> La quarta e la quinta di ciascuna Conference parteciperanno ai Play-in nella G44.
+                            <br><br>
+                            <strong>Accoppiamenti:</strong> Prima vs vincitrice Play-in, seconda vs terza.
+                        </div>
+                        
+                        <table class="calendar-table">
+                            <thead>
+                                <tr>
+                                    <th>Fase</th>
+                                    <th>Giornate</th>
+                                    <th>Format</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Play-in</td>
+                                    <td>G44</td>
+                                    <td>Gara secca</td>
+                                </tr>
+                                <tr>
+                                    <td>Semifinali Conference</td>
+                                    <td>G45, G46, G47</td>
+                                    <td>Best of 3</td>
+                                </tr>
+                                <tr>
+                                    <td>Finali Conference</td>
+                                    <td>G48, G49, G50</td>
+                                    <td>Best of 3</td>
+                                </tr>
+                                <tr>
+                                    <td>Finals</td>
+                                    <td>G51, G52, G53, G54, G55</td>
+                                    <td>Best of 5</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <p><small><strong>Note:</strong> In caso di parità passa chi era posizionato meglio dopo G43. Se le serie finiscono prima, si aspetta la giornata successiva. Per le regole di gioco consultare il regolamento Dunkest.</small></p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-      <!-- Section 3 - Footer -->
-    <section id="section3" class="section-3">
-        <div class="footer-container">
-            <div class="footer-top">
-                 <div class="footer-column">
-                    <h3>Contatti</h3>
-                    <ul>
-                        <li><a href="mailto:88eightyeighters@gmail.com">88eightyeighters@gmail.com</a></li>
-                        <li><a href="#">1912 Drunkest Avenue<br>Philadelphia, PA 19106</a></li>
-                    </ul>
-                    <div class="footer-social">
-                        <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" aria-label="Instagram Icon Button"><g fill="currentColor"><path d="M11 0 6.5.1c-1.2.1-2 .2-2.7.5-.7.3-1.4.7-2 1.2A5 5 0 0 0 .5 3.7C.3 4.5.1 5.3.1 6.5L0 11a42.8 42.8 0 0 0 .6 7.2 5 5 0 0 0 1.3 1.9 5 5 0 0 0 1.9 1.3c.7.3 1.5.5 2.7.5l4.5.1 4.5-.1c1.2-.1 2-.2 2.7-.5a5 5 0 0 0 1.9-1.3 5 5 0 0 0 1.3-1.9c.3-.7.5-1.5.5-2.7L22 11l-.1-4.5c-.1-1.2-.2-2-.5-2.7a5 5 0 0 0-1.3-1.9A5 5 0 0 0 18.2.6c-.7-.3-1.5-.5-2.7-.5L11 0zm0 2 4.4.1c1.1 0 1.7.2 2 .4.5.2.9.4 1.3.8s.6.8.8 1.3l.4 2L20 11l-.1 4.4c0 1.1-.2 1.7-.4 2-.2.5-.4.9-.8 1.3s-.8.6-1.3.8l-2 .4-4.4.1H6.6c-1.1 0-1.7-.2-2-.4-.5-.2-.9-.4-1.3-.8s-.6-.8-.8-1.3c-.2-.4-.3-1-.4-2L2 11V6.6c0-1.1.2-1.7.4-2 .2-.6.5-1 .8-1.4l1.3-.8c.4-.2 1-.3 2-.4H11z"></path><path d="M11 14.5c-2 0-3.6-1.6-3.6-3.6C7.4 9 9 7.4 11 7.4S14.6 9 14.6 11a3.7 3.7 0 0 1-3.6 3.5zm0-9C8 5.5 5.5 8 5.5 11S8 16.5 11 16.5s5.5-2.5 5.5-5.5S14 5.5 11 5.5zm6.9-.4c0 .7-.6 1.3-1.3 1.3s-1.3-.6-1.3-1.3c0-.7.6-1.3 1.3-1.3s1.3.6 1.3 1.3"></path></g></svg>
-                        <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" aria-label="Facebook Icon Button"><path fill="currentColor" fill-rule="evenodd" d="M22.1 11.0C22.1 4.9 17.1 0 11.0 0S0 4.9 0 11.0C0 16.5 4.0 21.1 9.3 22v-7.7h-2.8v-3.1h2.8V8.6c0-2.7 1.6-4.3 4.1-4.3 1.2 0 2.4.216 2.4.216v2.7H14.6c-1.3 0-1.8.853-1.8 1.7v2.0h3.0l-.49 3.2h-2.5V22c5.2-.83 9.3-5.4 9.3-10.9"></path></svg>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer-middle">
-                <div class="footer-logo">
-                    <img src="./assets/logo.png" alt="Logo" />
-                    <span class="company-name">88ers</span>
-                </div>
-                <div class="footer-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Cookie Policy</a>
-                    <a href="#">Accessibilità</a>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <div class="footer-copyright">
-                    <span>&copy; 2025 88ers. Tutti i diritti riservati.</span>
-                    <span>Soci Fondatori: Domenico Fiorilli & Pietro Noschese</span>
-                </div>
-                <div class="footer-legal">
-                    <a href="#">Informativa Privacy</a>
-                    <a href="#">Gestisci Cookies</a>
-                </div>
+    <!-- Draft Section -->
+    <section id="draft" class="main-section">
+        <div class="empty-section">
+            <div class="empty-content">
+                <h2>Draft</h2>
+                <p>Sezione in costruzione...</p>
             </div>
         </div>
     </section>
+
+    <!-- March Drunkeness Section -->
+    <section id="march-drunkeness" class="main-section">
+        <div class="empty-section">
+            <div class="empty-content">
+                <h2>March Drunkeness</h2>
+                <p>Sezione in costruzione...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hall of Fame Section -->
+    <section id="hall-of-fame" class="main-section">
+        <div class="empty-section">
+            <div class="empty-content">
+                <h2>Hall of Fame</h2>
+                <p>Sezione in costruzione...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Drunkest League</h3>
+                <p>La fantasy league più competitiva dedicata al basket NBA.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contatti</h3>
+                <p>Email: 88eightyeighters@gmail.com</p>
+                <p>Sede: Philadelphia, PA 19106</p>
+            </div>
+            <div class="footer-section">
+                <h3>Soci Fondatori</h3>
+                <p>Domenico Fiorilli</p>
+                <p>Pietro Noschese</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Drunkest League. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
 
     <script>
-        // Carousel functionality
-        let currentSlideIndex = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.dot');
-        const totalSlides = slides.length;
-
-        function showSlide(index) {
-            const container = document.getElementById('carouselContainer');
-            container.style.transform = `translateX(-${index * 100}%)`;
+        // Section switching functionality
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.main-section').forEach(section => {
+                section.classList.remove('active');
+            });
             
-            // Update dots
-            dots.forEach(dot => dot.classList.remove('active'));
-            dots[index].classList.add('active');
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Update nav active state
+            document.querySelectorAll('.main-nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
         }
 
-        function nextSlide() {
-            currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
-            showSlide(currentSlideIndex);
-        }
-
-        function previousSlide() {
-            currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
-            showSlide(currentSlideIndex);
-        }
-
-        function currentSlide(index) {
-            currentSlideIndex = index - 1;
-            showSlide(currentSlideIndex);
-        }
-
-        // Auto-play carousel
-        setInterval(nextSlide, 5000);
-
-        // Smooth scrolling and animation on scroll
+        // Regolamento sub-navigation and animations
         const sections = document.querySelectorAll('.section-content');
-        const navbar = document.querySelector('.navbar');
+        const subNavLinks = document.querySelectorAll('.sub-nav-links a');
 
         // Initial animation for first section
         window.addEventListener('load', () => {
             sections[0].classList.add('animate');
         });
 
-        // Intersection Observer for scroll animations
+        // Intersection Observer for scroll animations in regolamento
         const observerOptions = {
             threshold: 0.3,
             rootMargin: '0px 0px -100px 0px'
@@ -174,6 +834,15 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('animate');
+                    
+                    // Update active sub nav link
+                    const sectionId = entry.target.closest('.rule-section').id;
+                    subNavLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
                 }
             });
         }, observerOptions);
@@ -182,31 +851,8 @@
             observer.observe(section);
         });
 
-        // Navbar background change on scroll
-        let lastScrollTop = 0;
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (scrollTop > 100) {
-                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-            } else {
-                navbar.style.background = 'rgba(255, 255, 255, 0.8)';
-                navbar.style.boxShadow = 'none';
-            }
-
-            // Hide/show navbar on scroll
-            if (scrollTop > lastScrollTop && scrollTop > 100) {
-                navbar.style.transform = 'translateY(-100%)';
-            } else {
-                navbar.style.transform = 'translateY(0)';
-            }
-            
-            lastScrollTop = scrollTop;
-        });
-
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        // Smooth scroll for sub-navigation links
+        document.querySelectorAll('.sub-nav-links a').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
@@ -217,18 +863,3 @@
                     });
                 }
             });
-        });
-
-        // Parallax effect for floating elements
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelectorAll('.floating-element');
-            
-            parallax.forEach(element => {
-                const speed = 0.5;
-                element.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
-            });
-        });
-    </script>
-</body>
-</html>
