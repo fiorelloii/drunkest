@@ -1,1 +1,1 @@
-# drunkest
+# Drunkest League
