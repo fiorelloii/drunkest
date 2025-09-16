@@ -168,7 +168,6 @@
         .section-content {
             max-width: 900px;
             width: 100%;
-            opacity: 0;
             transform: translateY(50px);
             transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
@@ -821,7 +820,9 @@
 
         // Initial animation for first section
         window.addEventListener('load', () => {
-            sections[0].classList.add('animate');
+            if (sections[0]) {
+                sections[0].classList.add('animate');
+            }
         });
 
         // Intersection Observer for scroll animations in regolamento
@@ -833,10 +834,14 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
+                    // Animate the content
+                    const content = entry.target.querySelector('.section-content');
+                    if (content) {
+                        content.classList.add('animate');
+                    }
                     
                     // Update active sub nav link
-                    const sectionId = entry.target.closest('.rule-section').id;
+                    const sectionId = entry.target.id;
                     subNavLinks.forEach(link => {
                         link.classList.remove('active');
                         if (link.getAttribute('href') === `#${sectionId}`) {
@@ -845,21 +850,4 @@
                     });
                 }
             });
-        }, observerOptions);
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-
-        // Smooth scroll for sub-navigation links
-        document.querySelectorAll('.sub-nav-links a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
+        },
