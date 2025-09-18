@@ -1,3 +1,53 @@
+// Draft Table Local Storage Persistence
+document.addEventListener('DOMContentLoaded', function () {
+    const draftTable = document.querySelector('.draft-table');
+    if (!draftTable) return;
+
+    // Identificatore unico per la tabella (puoi cambiarlo se hai più tabelle)
+    const STORAGE_KEY = 'drunkest_draft_table';
+
+    // Carica i dati salvati
+    function loadDraftTable() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (!saved) return;
+        try {
+            const data = JSON.parse(saved);
+            const rows = draftTable.querySelectorAll('tbody tr');
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].querySelectorAll('td');
+                for (let j = 0; j < cells.length; j++) {
+                    if (data[i] && typeof data[i][j] !== 'undefined') {
+                        cells[j].textContent = data[i][j];
+                    }
+                }
+            }
+        } catch (e) {
+            // ignore
+        }
+    }
+
+    // Salva i dati
+    function saveDraftTable() {
+        const rows = draftTable.querySelectorAll('tbody tr');
+        const data = [];
+        for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].querySelectorAll('td');
+            data[i] = [];
+            for (let j = 0; j < cells.length; j++) {
+                data[i][j] = cells[j].textContent;
+            }
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    // Eventi su tutte le celle
+    draftTable.querySelectorAll('tbody td').forEach(cell => {
+        cell.addEventListener('input', saveDraftTable);
+    });
+
+    // Carica i dati all'avvio
+    loadDraftTable();
+});
 // Drunkest League JavaScript Functions
 
 // Section switching functionality
