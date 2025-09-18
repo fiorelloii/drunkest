@@ -1,3 +1,50 @@
+/* Draft Table Styles */
+.draft-table {
+    width: 100%;
+    margin: 2rem 0;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.draft-table th,
+.draft-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
+    font-size: 1rem;
+    min-width: 80px;
+    background: var(--white);
+    color: var(--dark);
+    outline: none;
+    transition: background 0.2s;
+}
+
+.draft-table th {
+    background: var(--blue);
+    color: var(--white);
+    font-weight: 600;
+    text-align: center;
+}
+
+.draft-table tr:last-child td {
+    border-bottom: none;
+}
+
+.draft-table td[contenteditable="true"]:focus {
+    background: var(--gray);
+    border: 2px solid var(--blue);
+}
+
+.draft-table th[colspan="10"] {
+    background: var(--gray);
+    color: var(--dark);
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--blue);
+}
 * {
     margin: 0;
     padding: 0;
