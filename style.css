@@ -1,3 +1,8 @@
+.draft-table,
+.draft-table th,
+.draft-table td {
+    border: 2px solid var(--blue);
+}
 /* Draft Table Styles */
 .draft-table {
     width: 100%;
