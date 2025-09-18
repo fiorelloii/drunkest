@@ -1,7 +1,15 @@
 .draft-table,
 .draft-table th,
 .draft-table td {
-    border: 2px solid var(--blue);
+    border: 4px solid var(--blue);
+}
+
+/* Bordo inferiore sottile solo su alcune celle specifiche */
+.draft-table tr:nth-child(even) td:last-child {
+    border-bottom: 1px solid #eee !important;
+}
+.draft-table tr:nth-child(odd) td:first-child {
+    border-bottom: 1px solid #eee !important;
 }
 /* Draft Table Styles */
 .draft-table {
