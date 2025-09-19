@@ -231,25 +231,6 @@ function debounce(func, wait, immediate) {
     };
 }
 
-// Drunkest League JavaScript Functions
-
-// Section switching functionality
-function showSection(sectionName) {
-    // Hide all sections
-    document.querySelectorAll('.main-section').forEach(section => {
-        section.classList.remove('active');
-    });
-    
-    // Show selected section
-    document.getElementById(sectionName).classList.add('active');
-    
-    // Update nav active state
-    document.querySelectorAll('.main-nav-links a').forEach(link => {
-        link.classList.remove('active');
-    });
-    event.target.classList.add('active');
-}
-
 // Draft Table Functions
 let SHEETDB_API_URL = 'https://sheetdb.io/api/v1/YOUR_SHEET_ID'; // Sostituisci con il tuo URL SheetDB
 
