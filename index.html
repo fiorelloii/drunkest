@@ -491,6 +491,25 @@
                     </tbody>
                 </table>
             </div>
+            <div class="draft-controls">
+                <div class="config-section">
+                    <details class="config-details">
+                        <summary>⚙️ Configurazione Cloud</summary>
+                        <div class="config-content">
+                            <label for="sheetdb-url">URL SheetDB:</label>
+                            <input type="url" id="sheetdb-url" placeholder="https://sheetdb.io/api/v1/YOUR_SHEET_ID">
+                            <button onclick="configureSheetDB()" class="config-btn">Configura</button>
+                            <small>Inserisci l'URL della tua API SheetDB per salvare i dati nel cloud</small>
+                        </div>
+                    </details>
+                </div>
+                <div class="action-buttons">
+                    <button onclick="loadDraftDataFromSheet()" class="load-btn">🔄 Ricarica dal Cloud</button>
+                    <button onclick="saveDraftData()" class="save-btn">💾 Salva</button>
+                    <button onclick="clearDraftData()" class="clear-btn">🗑️ Cancella Tutto</button>
+                    <button onclick="exportDraftData()" class="export-btn">📊 Esporta CSV</button>
+                </div>
+            </div>
         </div>
     </section>
 
