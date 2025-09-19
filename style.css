@@ -1,10 +1,10 @@
 
 
 /* Bordo inferiore sottile solo su alcune celle specifiche */
-.draft-table tr:nth-child(even) td:last-child {
+.draft-table tr:nth-child(odd) td:last-child {
     border-bottom: 1px solid #eee !important;
 }
-.draft-table tr:nth-child(odd) td:first-child {
+.draft-table tr:nth-child(even) td:first-child {
     border-bottom: 1px solid #eee !important;
 }
 /* Draft Table Styles */
