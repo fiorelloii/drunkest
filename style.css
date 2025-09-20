@@ -7,7 +7,7 @@
 
 /* Rimuovi il bordo inferiore solo dall'ultima cella delle righe pari */
 .draft-table tr:nth-child(even) td:last-child {
-    border-bottom: 3px red !important;
+    border-bottom: none !important;
 }
 /* Rimuovi il bordo inferiore solo dalla prima cella delle righe dispari */
 .draft-table tr:nth-child(odd) td:first-child {
@@ -42,9 +42,9 @@
 }
 
 .draft-table tr {
-/*     border-bottom: 1px solid var(--blue);
+    border-bottom: 1px solid var(--blue);
     border-right: 2.5px solid var(--blue);
-    border-left: 2.5px solid var(--blue); */
+    border-left: 2.5px solid var(--blue);
 }
 
 .draft-table tr:last-child {
