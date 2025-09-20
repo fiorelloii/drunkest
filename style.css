@@ -1,5 +1,8 @@
 
-
+.logo {
+    height: 2rem;
+    width: auto;
+}
 /* Bordo inferiore sottile solo su alcune celle specifiche */
 .draft-table tr:nth-child(even) td:last-child {
     border-bottom: 1px solid #eee !important;
