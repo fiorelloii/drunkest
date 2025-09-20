@@ -35,6 +35,7 @@
 
 .draft-table tr {
     border-bottom: 2.5px solid var(--blue);
+    border-right: 2.5px solid var(--blue);
 }
 
 .draft-table tr:last-child {
