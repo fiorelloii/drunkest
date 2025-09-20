@@ -4,11 +4,19 @@
     width: auto;
 }
 /* Bordo inferiore sottile solo su alcune celle specifiche */
+
+/* Rimuovi il bordo inferiore solo dall'ultima cella delle righe pari */
 .draft-table tr:nth-child(even) td:last-child {
-    border-bottom: 1px solid #eee !important;
+    border-bottom: none !important;
 }
+/* Rimuovi il bordo inferiore solo dalla prima cella delle righe dispari */
 .draft-table tr:nth-child(odd) td:first-child {
-    border-bottom: 1px solid #eee !important;
+    border-bottom: none !important;
+}
+/* Bordo destro e sinistro sottile per tutte le celle della draft-table */
+.draft-table td, .draft-table th {
+    border-right: 1px solid red;
+    border-left: 1px solid red;
 }
 /* Draft Table Styles */
 .draft-table {
