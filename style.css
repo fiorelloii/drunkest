@@ -42,9 +42,9 @@
 }
 
 .draft-table tr {
-    border-bottom: 1px solid var(--blue);
+/*     border-bottom: 1px solid var(--blue);
     border-right: 2.5px solid var(--blue);
-    border-left: 2.5px solid var(--blue);
+    border-left: 2.5px solid var(--blue); */
 }
 
 .draft-table tr:last-child {
