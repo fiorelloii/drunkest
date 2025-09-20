@@ -32,11 +32,11 @@
 .draft-table th,
 .draft-table td {
     padding: 1rem;
-    text-align: left;
-    font-size: 1rem;
+    text-align: center;
+    font-size: 1.4rem;
     min-width: 80px;
     background: var(--white);
-    color: var(--dark);
+    color: var(--blue);
     outline: none;
     transition: background 0.2s;
 }
