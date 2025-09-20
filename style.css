@@ -15,8 +15,8 @@
 }
 /* Bordo destro e sinistro sottile per tutte le celle della draft-table */
 .draft-table td, .draft-table th {
-    border-right: 1px solid red;
-    border-left: 1px solid red;
+    border-right: 1px solid var(--blue);
+    border-left: 1px solid var(--blue);
 }
 /* Draft Table Styles */
 .draft-table {
