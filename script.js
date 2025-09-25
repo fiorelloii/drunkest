@@ -54,30 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const dots = document.querySelectorAll('.dot');
     const totalSlides = slides.length;
 
-    function showSlide(index) {
-        const container = document.getElementById('carouselContainer');
-        container.style.transform = `translateX(-${index * 100}%)`;
-        
-        // Update dots
-        dots.forEach(dot => dot.classList.remove('active'));
-        dots[index].classList.add('active');
-    }
-
-    function nextSlide() {
-        currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
-        showSlide(currentSlideIndex);
-    }
-
-    function previousSlide() {
-        currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
-        showSlide(currentSlideIndex);
-    }
-
-    function currentSlide(index) {
-        currentSlideIndex = index - 1;
-        showSlide(currentSlideIndex);
-    }
-
     // Auto-play carousel
     setInterval(nextSlide, 5000);
 
@@ -85,6 +61,30 @@ document.addEventListener('DOMContentLoaded', function () {
     const sections = document.querySelectorAll('.section-content');
     const navbar = document.querySelector('.navbar');
 });
+
+function showSlide(index) {
+    const container = document.getElementById('carouselContainer');
+    container.style.transform = `translateX(-${index * 100}%)`;
+    
+    // Update dots
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[index].classList.add('active');
+}
+
+function nextSlide() {
+    currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+    showSlide(currentSlideIndex);
+}
+
+function previousSlide() {
+    currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+    showSlide(currentSlideIndex);
+}
+
+function currentSlide(index) {
+    currentSlideIndex = index - 1;
+    showSlide(currentSlideIndex);
+}
 
 // Section switching functionality
 function showSection(sectionName) {
