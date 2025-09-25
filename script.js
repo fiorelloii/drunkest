@@ -1,17 +1,3 @@
- // Carousel functionality
-    let currentSlideIndex = 0;
-    const slides = document.querySelectorAll('.carousel-slide');
-    const dots = document.querySelectorAll('.dot');
-    const totalSlides = slides.length;
-
-    // Auto-play carousel
-    setInterval(nextSlide, 5000);
-
-    // Smooth scrolling and animation on scroll
-    const sections = document.querySelectorAll('.section-content');
-    const navbar = document.querySelector('.navbar');
-
-
 // Draft Table Local Storage Persistence
 document.addEventListener('DOMContentLoaded', function () {
     const draftTable = document.querySelector('.draft-table');
