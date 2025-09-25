@@ -722,7 +722,19 @@
             <p>Norme sulla privacy | Utilizzo dei cookie | Condizioni d’uso | Note legali | Mappa del sito</p>
         </div>
     </footer>
+<script> // Carousel functionality
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.dot');
+    const totalSlides = slides.length;
 
+    // Auto-play carousel
+    setInterval(nextSlide, 5000);
+
+    // Smooth scrolling and animation on scroll
+    const sections = document.querySelectorAll('.section-content');
+    const navbar = document.querySelector('.navbar');
+</script>
     <script src="script.js"></script>
 </body>
 </html>
