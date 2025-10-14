@@ -189,6 +189,40 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    const hamburger = document.querySelector('.hamburger-btn');
+    const navContent = document.querySelector('.main-nav-content');
+    const navLinks = document.querySelectorAll('.main-nav-links a');
+
+    if (hamburger && navContent) {
+        hamburger.addEventListener('click', function (e) {
+            const isOpen = navContent.classList.toggle('nav-open');
+            hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            hamburger.textContent = isOpen ? '✕' : '☰';
+        });
+
+        // Chiudi menu al click su un link (utile su mobile)
+        navLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                if (navContent.classList.contains('nav-open')) {
+                    navContent.classList.remove('nav-open');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                    hamburger.textContent = '☰';
+                }
+            });
+        });
+
+        // opzionale: chiudi menu se si clicca fuori (solo mobile)
+        document.addEventListener('click', function (evt) {
+            if (!navContent.contains(evt.target) && !hamburger.contains(evt.target)) {
+                if (navContent.classList.contains('nav-open')) {
+                    navContent.classList.remove('nav-open');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                    hamburger.textContent = '☰';
+                }
+            }
+        });
+    }
 });
 
 // Animation utilities
