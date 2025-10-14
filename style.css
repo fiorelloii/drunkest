@@ -422,6 +422,78 @@ body {
     color: var(--white);
 }
 
+/* Hamburger + mobile nav */
+.hamburger-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--blue);
+    padding: 0.25rem 0.5rem;
+    align-self: center;
+}
+
+/* default desktop: nav links visible */
+.main-nav-content .main-nav-links {
+    display: flex;
+}
+
+/* mobile behaviour */
+@media (max-width: 900px) {
+    .hamburger-btn {
+        display: inline-flex;
+    }
+
+    /* hide links by default on small screens */
+    .main-nav-content .main-nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+        background: rgba(255,255,255,0.98);
+        margin-top: 0.5rem;
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+
+    /* when nav is opened add this class via JS */
+    .main-nav-content.nav-open .main-nav-links {
+        display: flex;
+    }
+
+    .main-nav-links li {
+        width: 100%;
+    }
+
+    .main-nav-links a {
+        padding: 0.8rem 1rem;
+        width: 100%;
+        display: block;
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        color: var(--dark);
+    }
+
+    .main-nav-links a:last-child {
+        border-bottom: none;
+    }
+
+    /* ensure navbar layout stacks neatly */
+    .main-nav-content {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+
+    /* keep body top padding consistent */
+    body {
+        padding-top: 72px;
+    }
+}
+
 /* Main Sections */
 .main-section {
     min-height: 100vh;
